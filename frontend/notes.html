@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Notes - QuickNotes SaaS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h2>QuickNotes</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                <a href="notes.html" class="nav-item active" id="nav-my-notes">
+                    <i class="fa-solid fa-book"></i> My Notes
+                </a>
+
+                <!-- Role Links -->
+                <div id="teacher-links" style="display: none;">
+                    <a href="notes.html?view=students" class="nav-item" id="nav-class-notes">
+                        <i class="fa-solid fa-chalkboard-user"></i> Class Notes
+                    </a>
+                </div>
+                <div id="admin-links" style="display: none;">
+                    <a href="notes.html?view=all" class="nav-item" id="nav-all-activity">
+                        <i class="fa-solid fa-globe"></i> Global Activity
+                    </a>
+                </div>
+
+                <p class="nav-label" style="margin-top:1rem;">CATEGORIES</p>
+                <ul id="category-list">
+                    <li class="nav-item active" data-category="All">
+                        <i class="fa-solid fa-layer-group"></i> All Notes
+                    </li>
+                    <li class="nav-item" data-category="Work">
+                        <i class="fa-solid fa-briefcase"></i> Work
+                    </li>
+                    <li class="nav-item" data-category="Personal">
+                        <i class="fa-solid fa-user"></i> Personal
+                    </li>
+                    <li class="nav-item" data-category="Ideas">
+                        <i class="fa-regular fa-lightbulb"></i> Ideas
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn" class="nav-item" style="color: #ef4444;">
+                    <i class="fa-solid fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-nav">
+                <div class="search-bar">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search notes...">
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="theme-toggle" title="Toggle Theme"><i
+                            class="fa-solid fa-moon"></i></button>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="avatar-initial">U</div>
+                        <div class="user-info">
+                            <span class="user-name" id="display-name">User</span>
+                            <span class="user-role" id="display-role">Student</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="dashboard-header" style="margin-bottom: 1.5rem;">
+                    <div>
+                        <h1>My Notes</h1>
+                        <p>Capture your thoughts and assignment details.</p>
+                    </div>
+                </div>
+
+                <!-- Note Creation Area -->
+                <section class="create-note-section">
+                    <form id="note-form" class="glass-panel">
+                        <div class="form-header">
+                            <input type="text" id="note-title" placeholder="What's on your mind?" autocomplete="off"
+                                class="title-input">
+                            <div class="pin-toggle" id="pin-toggle" title="Pin note">
+                                <i class="fa-solid fa-thumbtack"></i>
+                            </div>
+                        </div>
+
+                        <textarea id="note-content" placeholder="Write the details here..." rows="3"
+                            required></textarea>
+
+                        <div class="form-tools">
+                            <div class="tools-left">
+                                <div class="custom-select">
+                                    <i class="fa-solid fa-tag"></i>
+                                    <select id="note-category">
+                                        <option value="General">General</option>
+                                        <option value="Work">Work</option>
+                                        <option value="Personal">Personal</option>
+                                        <option value="Ideas">Ideas</option>
+                                    </select>
+                                </div>
+                                <div class="color-picker">
+                                    <input type="radio" name="noteColor" value="#ffffff" id="c-default" checked>
+                                    <label for="c-default" class="color-dot default" title="Default"></label>
+                                    <input type="radio" name="noteColor" value="#fef08a" id="c-yellow">
+                                    <label for="c-yellow" class="color-dot yellow" title="Yellow"></label>
+                                    <input type="radio" name="noteColor" value="#bbf7d0" id="c-green">
+                                    <label for="c-green" class="color-dot green" title="Green"></label>
+                                    <input type="radio" name="noteColor" value="#bfdbfe" id="c-blue">
+                                    <label for="c-blue" class="color-dot blue" title="Blue"></label>
+                                    <input type="radio" name="noteColor" value="#fbcfe8" id="c-pink">
+                                    <label for="c-pink" class="color-dot pink" title="Pink"></label>
+                                </div>
+                            </div>
+                            <!-- Homework Toggle -->
+                            <div id="homework-toggle-container"
+                                style="display: none; align-items: center; gap: 0.5rem;">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="is-homework-toggle">
+                                    <span class="checkmark" style="top: -8px;"></span>
+                                </label>
+                                <span style="font-size: 0.85rem; font-weight: 500; color: var(--primary);">Assign as
+                                    Homework</span>
+                            </div>
+                            <button type="submit" id="add-btn" class="primary-btn">
+                                <span>Save Note</span> <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Notes Display Area -->
+                <section class="notes-display-section">
+                    <div class="section-header">
+                        <h2 id="current-category-title">All Notes</h2>
+                    </div>
+                    <div id="notes-grid" class="masonry-grid">
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Note Modal -->
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal-content glass-panel edit-panel">
+            <div class="modal-header">
+                <h3>Edit Note</h3>
+                <button class="close-btn" id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="edit-form">
+                <input type="hidden" id="edit-id">
+                <div class="form-header">
+                    <input type="text" id="edit-title" class="title-input">
+                    <div class="pin-toggle" id="edit-pin-toggle">
+                        <i class="fa-solid fa-thumbtack"></i>
+                    </div>
+                </div>
+                <textarea id="edit-content" rows="6" required></textarea>
+
+                <div class="form-tools">
+                    <div class="tools-left">
+                        <div class="custom-select">
+                            <i class="fa-solid fa-tag"></i>
+                            <select id="edit-category">
+                                <option value="General">General</option>
+                                <option value="Work">Work</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Ideas">Ideas</option>
+                            </select>
+                        </div>
+                        <div class="color-picker" id="edit-color-container"></div>
+                    </div>
+                    <button type="submit" class="primary-btn save-btn">
+                        Save Changes <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/notes.js"></script>
+</body>
+
+</html>

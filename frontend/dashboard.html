@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - QuickNotes SaaS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h2>QuickNotes</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" id="nav-dashboard">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                <a href="notes.html" class="nav-item">
+                    <i class="fa-solid fa-layer-group"></i> My Notes
+                </a>
+
+                <div id="admin-links" style="display: none;">
+                    <p class="nav-label">ADMIN</p>
+                    <a href="#" class="nav-item" id="nav-users">
+                        <i class="fa-solid fa-users"></i> Users
+                    </a>
+                    <a href="#" class="nav-item" id="nav-settings">
+                        <i class="fa-solid fa-cog"></i> Settings
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn" class="nav-item" style="color: #ef4444;">
+                    <i class="fa-solid fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-nav">
+                <div></div> <!-- Spacer -->
+                <div class="header-actions">
+                    <button class="icon-btn" id="theme-toggle" title="Toggle Theme"><i
+                            class="fa-solid fa-moon"></i></button>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="avatar-initial">U</div>
+                        <div class="user-info">
+                            <span class="user-name" id="display-name">User</span>
+                            <span class="user-role" id="display-role">Student</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="dashboard-header">
+                    <div>
+                        <h1 id="welcome-text">Welcome back</h1>
+                        <p>Here's an overview of your QuickNotes activity.</p>
+                    </div>
+                    <a href="notes.html" class="primary-btn">
+                        Go to Notes <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Admin Analytics (Hidden by default) -->
+                <div id="admin-analytics" style="display: none;">
+                    <div class="stats-grid">
+                        <div class="glass-panel stat-card">
+                            <div class="stat-icon blue"><i class="fa-solid fa-users"></i></div>
+                            <div class="stat-details">
+                                <h3>Total Users</h3>
+                                <p id="stat-total-users">...</p>
+                            </div>
+                        </div>
+                        <div class="glass-panel stat-card">
+                            <div class="stat-icon purple"><i class="fa-solid fa-file-lines"></i></div>
+                            <div class="stat-details">
+                                <h3>Total Notes</h3>
+                                <p id="stat-total-notes">...</p>
+                            </div>
+                        </div>
+                        <div class="glass-panel stat-card">
+                            <div class="stat-icon green"><i class="fa-solid fa-user-graduate"></i></div>
+                            <div class="stat-details">
+                                <h3>Students</h3>
+                                <p id="stat-students">...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel">
+                        <div class="section-header">
+                            <h2>Most Active Users</h2>
+                        </div>
+                        <div id="top-users-list" style="display: flex; flex-direction: column; gap: 1rem;">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Users Management (Hidden by default) -->
+                <div id="admin-users" style="display: none;">
+                    <div class="glass-panel">
+                        <div class="section-header">
+                            <h2>User Management</h2>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Manage all accounts in the
+                                system.</p>
+                        </div>
+                        <div style="overflow-x: auto; margin-top: 1.5rem;">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                                <thead>
+                                    <tr
+                                        style="border-bottom: 2px solid var(--border); color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase;">
+                                        <th style="padding: 1rem;">Name</th>
+                                        <th style="padding: 1rem;">Email</th>
+                                        <th style="padding: 1rem;">Role</th>
+                                        <th style="padding: 1rem;">Joined</th>
+                                        <th style="padding: 1rem; text-align: right;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-table-body">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Settings (Hidden by default) -->
+                <div id="admin-settings" style="display: none;">
+                    <div class="glass-panel">
+                        <div class="section-header">
+                            <h2>System Settings</h2>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Configure global application
+                                preferences.</p>
+                        </div>
+                        <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
+                                <div>
+                                    <h4 style="margin-bottom: 0.25rem;">Allow New Registrations</h4>
+                                    <span style="font-size: 0.85rem; color: var(--text-secondary);">Enable or disable
+                                        new user signups.</span>
+                                </div>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" checked disabled>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
+                                <div>
+                                    <h4 style="margin-bottom: 0.25rem;">Maintenance Mode</h4>
+                                    <span style="font-size: 0.85rem; color: var(--text-secondary);">Take the application
+                                        offline for updates.</span>
+                                </div>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" disabled>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <button class="primary-btn" style="align-self: flex-start; margin-top: 1rem;" disabled>Save
+                                Preferences <i class="fa-solid fa-save"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Standard User Dashboard -->
+                <div id="user-dashboard">
+                    <div class="glass-panel" style="text-align: center; padding: 4rem 2rem;">
+                        <i class="fa-regular fa-compass"
+                            style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h2 style="margin-bottom: 0.5rem;">Ready to capture ideas?</h2>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Head over to your notes to start
+                            writing.</p>
+                        <a href="notes.html" class="primary-btn" style="display: inline-flex;">Open Notes</a>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>
